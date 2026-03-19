@@ -3,458 +3,432 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نتائج الانتخابات العراقية — بحث المرشحين</title>
+<title>موقع نتائج الانتخابات النيابية 2021 و2025 — شبكة الساعة الإعلامية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --black: #0a0a0a;
-    --white: #f5f0e8;
+    --bg: #080c10;
+    --surface: #0f1419;
+    --surface2: #161d26;
     --gold: #c9a84c;
     --gold-light: #e8c97a;
-    --red: #8b1a1a;
-    --red-light: #c0392b;
-    --green: #1a4a2e;
-    --green-light: #27ae60;
-    --card-bg: #111111;
-    --border: rgba(201,168,76,0.25);
-    --text-muted: #888;
+    --gold-dim: rgba(201,168,76,0.15);
+    --red: #cc2b2b;
+    --red-dim: rgba(204,43,43,0.15);
+    --white: #eef2f7;
+    --muted: #6b7a8d;
+    --border: rgba(201,168,76,0.18);
+    --border2: rgba(255,255,255,0.06);
+    --card: #0f1419;
+    --card-hover: #141c24;
+    --shadow: 0 4px 24px rgba(0,0,0,0.5);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   body {
-    background: var(--black);
+    background: var(--bg);
     color: var(--white);
     font-family: 'Tajawal', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* background pattern */
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 20%, rgba(201,168,76,0.04) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(139,26,26,0.06) 0%, transparent 50%),
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 40px,
-        rgba(201,168,76,0.015) 40px,
-        rgba(201,168,76,0.015) 41px
-      );
-    pointer-events: none;
-    z-index: 0;
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 100% 100%, rgba(26,122,58,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 0% 100%, rgba(204,43,43,0.04) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
   }
 
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
+  .page-wrap {
+    position: relative; z-index: 1;
+    max-width: 960px; margin: 0 auto;
+    padding: 0 16px 80px;
   }
 
-  /* ─── HEADER ─── */
-  header {
-    text-align: center;
-    padding: 50px 20px 40px;
-    position: relative;
+  /* ══ HEADER ══ */
+  header { text-align: center; padding: 44px 16px 36px; }
+
+  .logo-wrap {
+    margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
   }
 
-  .flag-bar {
-    display: flex;
-    height: 5px;
-    width: 120px;
-    margin: 0 auto 30px;
-    border-radius: 3px;
-    overflow: hidden;
+  .logo-clock { width: 54px; height: 54px; flex-shrink: 0; }
+
+  .logo-text-wrap { text-align: right; }
+  .logo-ar { font-size: 1.25rem; font-weight: 900; color: var(--gold); line-height: 1.1; }
+  .logo-en { font-size: 0.68rem; font-weight: 500; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .iraq-flag {
+    width: 64px; height: 38px; border-radius: 5px; overflow: hidden;
+    margin: 0 auto 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    display: flex; flex-direction: column;
   }
-  .flag-bar span:nth-child(1) { background: var(--red-light); flex: 1; }
-  .flag-bar span:nth-child(2) { background: var(--white); flex: 1; }
-  .flag-bar span:nth-child(3) { background: #1a5c2a; flex: 1; }
+  .flag-red   { background: #cc2929; flex: 1; }
+  .flag-white { background: #fff; flex: 1; display: flex; align-items: center; justify-content: center; }
+  .flag-black { background: #111; flex: 1; }
+  .flag-white span { font-size: 9px; color: #1a7a3a; font-weight: 900; font-family: serif; }
 
   header h1 {
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-    color: var(--white);
+    font-size: clamp(1.55rem, 4.5vw, 2.4rem);
+    font-weight: 900; line-height: 1.25; color: var(--white);
   }
+  header h1 em { font-style: normal; color: var(--gold); }
+  .header-sub { margin-top: 10px; font-size: 0.92rem; color: var(--muted); }
 
-  header h1 span {
-    color: var(--gold);
-  }
-
-  header p {
-    margin-top: 12px;
-    color: var(--text-muted);
-    font-size: 1rem;
-    font-weight: 300;
-  }
-
-  /* ─── YEAR TABS ─── */
+  /* ══ TABS ══ */
   .year-tabs {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin: 30px 0 0;
+    display: flex; gap: 8px; justify-content: center;
+    margin: 26px 0 0; flex-wrap: wrap;
   }
-
   .year-tab {
-    padding: 8px 24px;
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    background: transparent;
-    color: var(--text-muted);
-    font-family: 'Tajawal', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+    padding: 9px 22px; border: 1.5px solid var(--border); border-radius: 50px;
+    background: transparent; color: var(--muted);
+    font-family: 'Tajawal', sans-serif; font-size: 0.92rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
   }
-
-  .year-tab:hover { border-color: var(--gold); color: var(--gold); }
+  .year-tab:hover { border-color: var(--gold); color: var(--gold-light); }
   .year-tab.active {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--black);
-    font-weight: 700;
+    background: linear-gradient(135deg, #c9a84c, #a8832a);
+    border-color: transparent; color: #0a0a0a; font-weight: 800;
+    box-shadow: 0 2px 12px rgba(201,168,76,0.35);
+  }
+  .year-tab.t2021.active {
+    background: linear-gradient(135deg, #cc3333, #991a1a);
+    color: #fff; box-shadow: 0 2px 12px rgba(204,43,43,0.4);
   }
 
-  /* ─── SEARCH BOX ─── */
-  .search-wrapper {
-    margin: 30px 0 0;
-    position: relative;
-  }
-
+  /* ══ SEARCH ══ */
+  .search-section { margin: 28px 0 0; }
+  .search-wrapper { position: relative; }
   .search-box {
-    width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 18px 60px 18px 24px;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 1.1rem;
-    color: var(--white);
-    outline: none;
-    transition: border-color 0.25s, background 0.25s;
-    text-align: right;
+    width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 16px; padding: 17px 56px 17px 20px;
+    font-family: 'Tajawal', sans-serif; font-size: 1.05rem; color: var(--white);
+    outline: none; transition: all 0.25s; text-align: right;
   }
-
-  .search-box::placeholder { color: #555; }
+  .search-box::placeholder { color: #3d4a57; }
   .search-box:focus {
-    border-color: var(--gold);
-    background: rgba(201,168,76,0.05);
+    border-color: var(--gold); background: var(--surface2);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
   }
-
   .search-icon {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gold);
-    font-size: 1.3rem;
-    pointer-events: none;
+    position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
+    font-size: 1.2rem; pointer-events: none; opacity: 0.6;
   }
+  .search-hint { margin-top: 9px; font-size: 0.8rem; color: var(--muted); text-align: center; }
 
-  .search-hint {
-    margin-top: 10px;
-    font-size: 0.82rem;
-    color: #555;
-    text-align: center;
-  }
-
-  .search-hint strong { color: var(--gold); }
-
-  /* ─── STATS BAR ─── */
+  /* ══ STATS ══ */
   .stats-bar {
-    display: flex;
-    gap: 16px;
-    margin: 24px 0;
-    flex-wrap: wrap;
+    display: flex; gap: 10px; margin: 20px 0 0;
+    flex-wrap: wrap; justify-content: center;
   }
-
   .stat-chip {
-    padding: 6px 16px;
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    padding: 6px 14px; border: 1px solid var(--border2); border-radius: 50px;
+    font-size: 0.78rem; color: var(--muted);
+    display: flex; align-items: center; gap: 7px; background: var(--surface);
+  }
+  .stat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 28px 0;
   }
 
-  .stat-chip .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
-
-  /* ─── LOADING ─── */
-  .loading {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-  }
-
+  /* ══ LOADING ══ */
+  .loading { text-align: center; padding: 70px 20px; color: var(--muted); }
   .spinner {
-    width: 40px; height: 40px;
-    border: 3px solid rgba(201,168,76,0.2);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
+    width: 38px; height: 38px; border: 3px solid rgba(201,168,76,0.15);
+    border-top-color: var(--gold); border-radius: 50%;
+    animation: spin 0.75s linear infinite; margin: 0 auto 18px;
   }
-
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ─── RESULTS ─── */
-  .results-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-    gap: 10px;
+  /* ══ RESULTS META ══ */
+  .results-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+  }
+  .results-count { font-size: 0.88rem; color: var(--muted); }
+  .results-count strong { color: var(--gold-light); font-size: 1.05rem; font-weight: 800; }
+  .results-note {
+    font-size: 0.75rem; color: #3d4a57; background: var(--surface);
+    padding: 4px 10px; border-radius: 50px; border: 1px solid var(--border2);
   }
 
-  .results-count {
-    font-size: 0.9rem;
-    color: var(--text-muted);
+  /* ══ YEAR SECTION HEADER ══ */
+  .year-section-header {
+    display: flex; align-items: center; gap: 12px; margin: 24px 0 12px;
   }
-
-  .results-count strong { color: var(--gold); font-size: 1.1rem; }
-
-  .results-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  .ys-line { flex: 1; height: 1px; }
+  .ys-label {
+    font-size: 0.8rem; font-weight: 700; padding: 4px 14px;
+    border-radius: 50px; letter-spacing: 0.5px; flex-shrink: 0;
   }
+  .ys-2025 .ys-line { background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4)); }
+  .ys-2025 .ys-line:last-child { background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent); }
+  .ys-2025 .ys-label { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .ys-2021 .ys-line { background: linear-gradient(90deg, transparent, rgba(204,43,43,0.4)); }
+  .ys-2021 .ys-line:last-child { background: linear-gradient(90deg, rgba(204,43,43,0.4), transparent); }
+  .ys-2021 .ys-label { background: var(--red-dim); color: #e07070; border: 1px solid rgba(204,43,43,0.3); }
 
-  /* ─── CARD ─── */
+  /* ══ CARDS ══ */
+  .results-grid { display: flex; flex-direction: column; gap: 10px; }
+
   .result-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px 22px;
-    transition: border-color 0.2s, transform 0.15s;
-    animation: fadeUp 0.3s ease both;
+    background: var(--card); border: 1px solid var(--border2); border-radius: 14px;
+    padding: 18px 20px; transition: all 0.2s; animation: fadeUp 0.3s ease both;
+    position: relative; overflow: hidden;
   }
-
+  .result-card::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 3px; height: 100%; border-radius: 0 14px 14px 0;
+  }
+  .result-card.c2025::before { background: linear-gradient(180deg, var(--gold), transparent); }
+  .result-card.c2021::before { background: linear-gradient(180deg, var(--red), transparent); }
   .result-card:hover {
-    border-color: rgba(201,168,76,0.5);
-    transform: translateY(-1px);
+    background: var(--card-hover);
+    border-color: rgba(201,168,76,0.25); box-shadow: var(--shadow);
   }
-
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
+  .card-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 10px; margin-bottom: 14px;
   }
-
-  .candidate-name {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--white);
-    line-height: 1.3;
-  }
+  .candidate-name { font-size: 1.08rem; font-weight: 800; color: var(--white); line-height: 1.35; flex: 1; }
 
   .year-badge {
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    white-space: nowrap;
-    flex-shrink: 0;
+    padding: 3px 11px; border-radius: 50px; font-size: 0.73rem;
+    font-weight: 700; white-space: nowrap; flex-shrink: 0;
   }
-
-  .year-badge.y2025 { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
-  .year-badge.y2021 { background: rgba(139,26,26,0.2); color: #e07070; border: 1px solid rgba(139,26,26,0.4); }
+  .year-badge.b2025 { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .year-badge.b2021 { background: var(--red-dim); color: #e07070; border: 1px solid rgba(204,43,43,0.35); }
 
   .card-fields {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 8px 16px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px 12px;
   }
-
   .field-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 8px 10px; background: rgba(255,255,255,0.025);
+    border-radius: 8px; border: 1px solid var(--border2);
   }
-
   .field-label {
-    font-size: 0.72rem;
-    color: #555;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 0.67rem; color: #3d4a57; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase;
   }
+  .field-value { font-size: 0.87rem; color: #b0bec5; line-height: 1.4; word-break: break-word; }
+  .field-value.hi { color: var(--gold-light); font-weight: 700; font-size: 0.97rem; }
 
-  .field-value {
-    font-size: 0.88rem;
-    color: #ccc;
-    font-weight: 400;
-  }
+  /* ══ STATE BOXES ══ */
+  .state-box { text-align: center; padding: 70px 20px; color: var(--muted); }
+  .state-box .s-icon { font-size: 2.8rem; margin-bottom: 18px; }
+  .state-box h3 { font-size: 1.05rem; color: var(--white); margin-bottom: 10px; font-weight: 700; }
+  .state-box p { font-size: 0.86rem; line-height: 1.8; }
 
-  .field-value.highlight {
-    color: var(--gold-light);
-    font-weight: 600;
-    font-size: 1rem;
-  }
-
-  /* ─── EMPTY / ERROR STATES ─── */
-  .state-box {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-  }
-
-  .state-box .icon { font-size: 3rem; margin-bottom: 16px; }
-  .state-box h3 { font-size: 1.1rem; color: var(--white); margin-bottom: 8px; }
-  .state-box p { font-size: 0.88rem; line-height: 1.7; }
-
-  /* ─── FOOTER ─── */
+  /* ══ FOOTER ══ */
   footer {
-    text-align: center;
-    padding: 30px 20px;
-    color: #444;
-    font-size: 0.8rem;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    margin-top: 40px;
+    border-top: 1px solid var(--border2);
+    margin-top: 50px; padding: 36px 16px 24px; text-align: center;
   }
+  .footer-logo { font-size: 1rem; font-weight: 800; color: var(--gold); margin-bottom: 6px; }
+  .footer-copy { font-size: 0.78rem; color: var(--muted); margin-bottom: 20px; }
+  .social-links {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; flex-wrap: wrap;
+  }
+  .social-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 50px;
+    border: 1px solid var(--border2); background: var(--surface);
+    color: var(--muted); text-decoration: none;
+    font-size: 0.78rem; font-family: 'Tajawal', sans-serif; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold-light); background: var(--surface2); }
+  .social-btn .s-ic { font-size: 1rem; }
 
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 600px) {
+  /* ══ MOBILE ══ */
+  @media (max-width: 640px) {
+    .page-wrap { padding: 0 12px 60px; }
+    header { padding: 30px 12px 24px; }
+    .logo-clock { width: 44px; height: 44px; }
+    .logo-ar { font-size: 1.05rem; }
+    .logo-wrap { gap: 10px; }
+    .year-tabs { gap: 6px; }
+    .year-tab { padding: 7px 14px; font-size: 0.83rem; }
+    .result-card { padding: 14px 14px; }
     .card-fields { grid-template-columns: 1fr 1fr; }
-    .stats-bar { gap: 8px; }
+    .social-links { gap: 6px; }
+    .social-btn { padding: 6px 10px; font-size: 0.72rem; }
+  }
+  @media (max-width: 400px) {
+    header h1 { font-size: 1.35rem; }
+    .card-fields { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="page-wrap">
 
   <header>
-    <div class="flag-bar"><span></span><span></span><span></span></div>
-    <h1>بحث نتائج<br><span>الانتخابات العراقية</span></h1>
-    <p>انتخابات مجلس النواب · 2021 و 2025</p>
+    <!-- شعار الساعة -->
+    <div class="logo-wrap">
+      <svg class="logo-clock" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="27" cy="27" r="25" stroke="#c9a84c" stroke-width="2" fill="#0f1419"/>
+        <circle cx="27" cy="27" r="20" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+        <line x1="27" y1="27" x2="27" y2="11" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="27" y1="27" x2="38" y2="33" stroke="#e8c97a" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="27" cy="27" r="2.5" fill="#c9a84c"/>
+        <circle cx="27" cy="7"  r="1.2" fill="#c9a84c" opacity="0.5"/>
+        <circle cx="27" cy="47" r="1.2" fill="#c9a84c" opacity="0.5"/>
+        <circle cx="7"  cy="27" r="1.2" fill="#c9a84c" opacity="0.5"/>
+        <circle cx="47" cy="27" r="1.2" fill="#c9a84c" opacity="0.5"/>
+      </svg>
+      <div class="logo-text-wrap">
+        <div class="logo-ar">شبكة الساعة الإعلامية</div>
+        <div class="logo-en">Alssaa Network</div>
+      </div>
+    </div>
+
+    <!-- علم العراق -->
+    <div class="iraq-flag">
+      <div class="flag-red"></div>
+      <div class="flag-white"><span>الله أكبر</span></div>
+      <div class="flag-black"></div>
+    </div>
+
+    <h1>موقع نتائج <em>الانتخابات النيابية</em><br>2021 و 2025</h1>
+    <p class="header-sub">ابحث عن أي مرشح في انتخابات مجلس النواب العراقي</p>
 
     <div class="year-tabs">
       <button class="year-tab active" data-year="all">الكل</button>
-      <button class="year-tab" data-year="2025">2025</button>
-      <button class="year-tab" data-year="2021">2021</button>
+      <button class="year-tab t2025" data-year="2025">2025</button>
+      <button class="year-tab t2021" data-year="2021">2021</button>
     </div>
   </header>
 
-  <div class="search-wrapper">
-    <input
-      type="text"
-      class="search-box"
-      id="searchInput"
-      placeholder="اكتب اسم المرشح... مثال: أحمد محمد الجابري"
-      autocomplete="off"
-      spellcheck="false"
-    >
-    <span class="search-icon">🔍</span>
+  <!-- SEARCH -->
+  <div class="search-section">
+    <div class="search-wrapper">
+      <input
+        type="text"
+        class="search-box"
+        id="searchInput"
+        placeholder="ابحث عن المرشح في نتائج انتخابات 2021 أو 2025 النيابية..."
+        autocomplete="off"
+        spellcheck="false"
+      >
+      <span class="search-icon">🔍</span>
+    </div>
+    <p class="search-hint">ابحث بالاسم الثنائي أو الثلاثي أو اللقب أو اسم المرشح واسم جده</p>
   </div>
-  <p class="search-hint">
-    ابحث بـ <strong>الاسم الثنائي</strong> أو <strong>الثلاثي</strong> أو <strong>اللقب</strong> أو <strong>اسم + اسم الجد</strong>
-  </p>
 
+  <!-- STATS -->
   <div class="stats-bar" id="statsBar" style="display:none">
-    <div class="stat-chip"><span class="dot" style="background:#c0392b"></span><span id="stat2021">جاري التحميل...</span></div>
-    <div class="stat-chip"><span class="dot"></span><span id="stat2025">جاري التحميل...</span></div>
+    <div class="stat-chip">
+      <span class="stat-dot" style="background:#cc3333"></span>
+      <span id="stat2021">جاري التحميل...</span>
+    </div>
+    <div class="stat-chip">
+      <span class="stat-dot" style="background:#c9a84c"></span>
+      <span id="stat2025">جاري التحميل...</span>
+    </div>
   </div>
+
+  <div class="divider"></div>
 
   <div id="mainArea">
     <div class="loading">
       <div class="spinner"></div>
-      <p>جاري تحميل البيانات...</p>
+      <p>جاري تحميل بيانات الانتخابات...</p>
     </div>
   </div>
 
 </div>
 
+<!-- FOOTER -->
 <footer>
-  بيانات رسمية مستخرجة من نتائج الانتخابات العراقية &nbsp;·&nbsp; للأغراض البحثية والصحفية
+  <div class="footer-logo">شبكة الساعة الإعلامية</div>
+  <div class="footer-copy">خاصة بشبكة الساعة — جميع الحقوق محفوظة &copy; 2025</div>
+  <div class="social-links">
+    <a href="https://alssaa.com/" target="_blank" class="social-btn">
+      <span class="s-ic">🌐</span> الموقع الرسمي
+    </a>
+    <a href="https://www.youtube.com/@alssaanetwork" target="_blank" class="social-btn">
+      <span class="s-ic">▶️</span> يوتيوب
+    </a>
+    <a href="https://t.me/alssaanetwork" target="_blank" class="social-btn">
+      <span class="s-ic">✈️</span> تيليغرام
+    </a>
+    <a href="https://www.instagram.com/alssaanetwork" target="_blank" class="social-btn">
+      <span class="s-ic">📸</span> إنستغرام
+    </a>
+    <a href="https://x.com/alssaanetwork" target="_blank" class="social-btn">
+      <span class="s-ic">🐦</span> X (تويتر)
+    </a>
+  </div>
 </footer>
 
 <script>
-// ─── CONFIG ────────────────────────────────────────────────────────────────────
 const URLS = {
   "2025": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=863852432&single=true&output=csv",
   "2021": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=0&single=true&output=csv"
 };
+const NAME_COLS = ["الاسم","اسم المرشح","الاسم الكامل","الاسم الثلاثي","المرشح","اسم","name","candidate","full_name"];
+const HIGHLIGHT_COLS = ["الأصوات","عدد الأصوات","votes","الرصيد","المقاعد","الفائز","الحالة","النتيجة","الدرجة","المرتبة"];
 
-// أعمدة الاسم المحتملة (بالأولوية)
-const NAME_COLS = ["الاسم", "اسم المرشح", "الاسم الكامل", "الاسم الثلاثي", "المرشح", "اسم", "name", "candidate", "full_name"];
-
-// أعمدة مهمة تظهر بشكل بارز
-const HIGHLIGHT_COLS = ["الأصوات", "عدد الأصوات", "votes", "الرصيد", "المقاعد", "الفائز", "الحالة", "النتيجة"];
-
-// ─── STATE ─────────────────────────────────────────────────────────────────────
 let data = { "2025": [], "2021": [] };
-let headers = { "2025": [], "2021": [] };
 let nameCol = { "2025": null, "2021": null };
 let activeYear = "all";
 let searchTimeout = null;
 
-// ─── CSV PARSER ────────────────────────────────────────────────────────────────
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   if (lines.length < 2) return { headers: [], rows: [] };
-
   const parseRow = line => {
-    const cols = [];
-    let cur = '', inQ = false;
+    const cols = []; let cur = '', inQ = false;
     for (let i = 0; i < line.length; i++) {
       const ch = line[i];
       if (ch === '"') { inQ = !inQ; }
       else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
       else { cur += ch; }
     }
-    cols.push(cur.trim());
-    return cols;
+    cols.push(cur.trim()); return cols;
   };
-
   const hdrs = parseRow(lines[0]);
   const rows = lines.slice(1).map(l => {
-    const vals = parseRow(l);
-    const obj = {};
+    const vals = parseRow(l); const obj = {};
     hdrs.forEach((h, i) => { obj[h] = vals[i] || ''; });
     return obj;
   }).filter(r => Object.values(r).some(v => v.trim()));
-
   return { headers: hdrs, rows };
 }
 
-// ─── ARABIC NORMALIZE ──────────────────────────────────────────────────────────
 function norm(str) {
   if (!str) return '';
-  return str
-    .replace(/[أإآ]/g, 'ا')
-    .replace(/ة/g, 'ه')
-    .replace(/ى/g, 'ي')
-    .replace(/ؤ/g, 'و')
-    .replace(/ئ/g, 'ي')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return str.replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')
+            .replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/\s+/g,' ').trim();
 }
 
-// ─── FIND NAME COLUMN ──────────────────────────────────────────────────────────
+// تحويل الأرقام إلى إنجليزية
+function toEn(str) {
+  if (!str) return str;
+  return String(str).replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
+}
+
 function findNameCol(hdrs) {
   for (const nc of NAME_COLS) {
     const found = hdrs.find(h => h.trim().toLowerCase().includes(nc.toLowerCase()));
@@ -463,158 +437,126 @@ function findNameCol(hdrs) {
   return hdrs[0] || null;
 }
 
-// ─── LOAD DATA ─────────────────────────────────────────────────────────────────
 async function loadData() {
-  const results = await Promise.allSettled(
-    Object.entries(URLS).map(async ([year, url]) => {
-      const res = await fetch(url);
-      const text = await res.text();
-      const parsed = parseCSV(text);
-      data[year] = parsed.rows;
-      headers[year] = parsed.headers;
-      nameCol[year] = findNameCol(parsed.headers);
-      return year;
-    })
-  );
-
-  // update stats
-  document.getElementById('stat2021').textContent = `انتخابات 2021: ${data['2021'].length.toLocaleString('ar-IQ')} مرشح`;
-  document.getElementById('stat2025').textContent = `انتخابات 2025: ${data['2025'].length.toLocaleString('ar-IQ')} مرشح`;
+  await Promise.allSettled(Object.entries(URLS).map(async ([year, url]) => {
+    const res = await fetch(url);
+    const text = await res.text();
+    const parsed = parseCSV(text);
+    data[year] = parsed.rows;
+    nameCol[year] = findNameCol(parsed.headers);
+  }));
+  document.getElementById('stat2021').textContent =
+    `انتخابات 2021: ${data['2021'].length.toLocaleString('en-US')} مرشح`;
+  document.getElementById('stat2025').textContent =
+    `انتخابات 2025: ${data['2025'].length.toLocaleString('en-US')} مرشح`;
   document.getElementById('statsBar').style.display = 'flex';
-
   showWelcome();
 }
 
-// ─── SEARCH ────────────────────────────────────────────────────────────────────
 function search(query) {
   const q = norm(query).toLowerCase();
   const parts = q.split(' ').filter(p => p.length > 0);
-  if (parts.length === 0) return [];
-
-  const years = activeYear === 'all' ? ['2025', '2021'] : [activeYear];
-  const results = [];
-
+  if (!parts.length) return { "2025": [], "2021": [] };
+  const out = { "2025": [], "2021": [] };
+  const years = activeYear === 'all' ? ['2025','2021'] : [activeYear];
   for (const year of years) {
-    const nc = nameCol[year];
-    if (!nc) continue;
-
+    const nc = nameCol[year]; if (!nc) continue;
     for (const row of data[year]) {
       const name = norm(row[nc] || '').toLowerCase();
-      if (parts.every(p => name.includes(p))) {
-        results.push({ ...row, __year: year, __nameCol: nc });
-      }
+      if (parts.every(p => name.includes(p))) out[year].push({...row, __year: year, __nc: nc});
     }
   }
-
-  return results;
+  return out;
 }
 
-// ─── RENDER CARD ───────────────────────────────────────────────────────────────
 function renderCard(row, idx) {
-  const year = row.__year;
-  const nc = row.__nameCol;
-  const name = row[nc] || '—';
-
-  const skipCols = new Set([nc, '__year', '__nameCol']);
-  const entries = Object.entries(row).filter(([k]) => !skipCols.has(k));
-
-  const isHighlight = col => HIGHLIGHT_COLS.some(h => col.toLowerCase().includes(h.toLowerCase()));
-
-  const fieldsHtml = entries
-    .filter(([, v]) => v && v.trim() && v !== '—')
-    .map(([k, v]) => `
+  const year = row.__year; const nc = row.__nc; const name = row[nc] || '—';
+  const skip = new Set([nc, '__year', '__nc']);
+  const isHi = col => HIGHLIGHT_COLS.some(h => col.toLowerCase().includes(h.toLowerCase()));
+  const fieldsHtml = Object.entries(row)
+    .filter(([k]) => !skip.has(k))
+    .filter(([,v]) => v && v.trim() && v !== 'nan')
+    .map(([k,v]) => `
       <div class="field-item">
         <span class="field-label">${k}</span>
-        <span class="field-value ${isHighlight(k) ? 'highlight' : ''}">${v}</span>
-      </div>
-    `).join('');
-
+        <span class="field-value ${isHi(k)?'hi':''}">${toEn(v)}</span>
+      </div>`).join('');
   return `
-    <div class="result-card" style="animation-delay:${idx * 0.04}s">
-      <div class="card-header">
+    <div class="result-card c${year}" style="animation-delay:${idx*0.035}s">
+      <div class="card-top">
         <div class="candidate-name">${name}</div>
-        <span class="year-badge y${year}">🗳️ ${year}</span>
+        <span class="year-badge b${year}">🗳️ ${year}</span>
       </div>
       ${fieldsHtml ? `<div class="card-fields">${fieldsHtml}</div>` : ''}
-    </div>
-  `;
+    </div>`;
 }
 
-// ─── SHOW STATES ───────────────────────────────────────────────────────────────
+function yearHeader(year, count) {
+  return `
+    <div class="year-section-header ys-${year}">
+      <span class="ys-line"></span>
+      <span class="ys-label">انتخابات ${year} — ${count.toLocaleString('en-US')} نتيجة</span>
+      <span class="ys-line"></span>
+    </div>`;
+}
+
 function showWelcome() {
   document.getElementById('mainArea').innerHTML = `
     <div class="state-box">
-      <div class="icon">🔍</div>
-      <h3>ابدأ البحث</h3>
-      <p>اكتب اسم المرشح في حقل البحث أعلاه<br>يمكنك البحث بالاسم الثنائي أو الثلاثي أو اللقب</p>
-    </div>
-  `;
+      <div class="s-icon">🗳️</div>
+      <h3>ابدأ البحث عن المرشح</h3>
+      <p>اكتب اسم المرشح في حقل البحث أعلاه<br>يمكنك البحث بالاسم الثنائي أو الثلاثي أو اللقب أو اسم الجد</p>
+    </div>`;
 }
 
-function showResults(results, query) {
+function showResults(byYear, query) {
   const area = document.getElementById('mainArea');
-  if (results.length === 0) {
+  const total = (byYear['2025']?.length||0) + (byYear['2021']?.length||0);
+  if (total === 0) {
     area.innerHTML = `
       <div class="state-box">
-        <div class="icon">😶</div>
+        <div class="s-icon">🔎</div>
         <h3>لا توجد نتائج لـ "${query}"</h3>
-        <p>
-          تأكد من الكتابة الصحيحة · جرب جزءاً من الاسم<br>
-          جرب اللقب وحده · أو اسم الأب منفرداً
-        </p>
-      </div>
-    `;
-    return;
+        <p>تأكد من الكتابة الصحيحة · جرب جزءاً من الاسم<br>جرب اللقب وحده · أو اسم الأب منفرداً</p>
+      </div>`; return;
   }
-
-  const shown = results.slice(0, 50);
-  const more = results.length - shown.length;
-
-  area.innerHTML = `
-    <div class="results-header">
-      <div class="results-count">وُجد <strong>${results.length.toLocaleString('ar-IQ')}</strong> نتيجة</div>
-      ${more > 0 ? `<span style="font-size:.82rem;color:#555">يُعرض أول 50 — دقّق البحث للمزيد</span>` : ''}
-    </div>
-    <div class="results-grid">
-      ${shown.map((r, i) => renderCard(r, i)).join('')}
-    </div>
-  `;
+  let html = `
+    <div class="results-meta">
+      <div class="results-count">إجمالي النتائج: <strong>${total.toLocaleString('en-US')}</strong></div>
+      ${total > 50 ? `<span class="results-note">يُعرض أول 50 — دقّق البحث</span>` : ''}
+    </div>`;
+  for (const year of ['2025','2021']) {
+    const rows = byYear[year]||[]; if (!rows.length) continue;
+    const shown = rows.slice(0,25);
+    html += yearHeader(year, rows.length);
+    html += `<div class="results-grid">${shown.map((r,i)=>renderCard(r,i)).join('')}</div>`;
+  }
+  area.innerHTML = html;
 }
 
-// ─── EVENTS ────────────────────────────────────────────────────────────────────
 document.getElementById('searchInput').addEventListener('input', e => {
   clearTimeout(searchTimeout);
   const q = e.target.value.trim();
   if (q.length < 2) { showWelcome(); return; }
-
-  searchTimeout = setTimeout(() => {
-    const results = search(q);
-    showResults(results, q);
-  }, 300);
+  searchTimeout = setTimeout(() => showResults(search(q), q), 280);
 });
 
 document.querySelectorAll('.year-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeYear = btn.dataset.year;
-
+    btn.classList.add('active'); activeYear = btn.dataset.year;
     const q = document.getElementById('searchInput').value.trim();
-    if (q.length >= 2) showResults(search(q), q);
-    else showWelcome();
+    if (q.length >= 2) showResults(search(q), q); else showWelcome();
   });
 });
 
-// ─── INIT ──────────────────────────────────────────────────────────────────────
-loadData().catch(err => {
+loadData().catch(() => {
   document.getElementById('mainArea').innerHTML = `
     <div class="state-box">
-      <div class="icon">⚠️</div>
+      <div class="s-icon">⚠️</div>
       <h3>تعذّر تحميل البيانات</h3>
       <p>تأكد من أن روابط Google Sheets مفتوحة للعموم<br>ثم أعد تحميل الصفحة</p>
-    </div>
-  `;
-  console.error(err);
+    </div>`;
 });
 </script>
 </body>
