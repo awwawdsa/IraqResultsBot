@@ -53,22 +53,18 @@
   }
 
   /* ══ HEADER ══ */
-  header { text-align: center; padding: 44px 16px 36px; }
+  header { text-align: center; padding: 24px 16px 20px; }
 
   .logo-wrap {
-    margin-bottom: 20px;
-    display: flex; align-items: center; justify-content: center; gap: 14px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: center;
   }
 
-  .logo-clock { width: 54px; height: 54px; flex-shrink: 0; }
-
-  .logo-text-wrap { text-align: right; }
-  .logo-ar { font-size: 1.25rem; font-weight: 900; color: var(--gold); line-height: 1.1; }
-  .logo-en { font-size: 0.68rem; font-weight: 500; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .logo-img { height: 52px; width: auto; }
 
   .iraq-flag {
     width: 64px; height: 38px; border-radius: 5px; overflow: hidden;
-    margin: 0 auto 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+    margin: 0 auto 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.5);
     display: flex; flex-direction: column;
   }
   .flag-red   { background: #cc2929; flex: 1; }
@@ -233,10 +229,10 @@
   .field-value.hi { color: var(--gold-light); font-weight: 700; font-size: 0.97rem; }
 
   /* ══ STATE BOXES ══ */
-  .state-box { text-align: center; padding: 70px 20px; color: var(--muted); }
-  .state-box .s-icon { font-size: 2.8rem; margin-bottom: 18px; }
-  .state-box h3 { font-size: 1.05rem; color: var(--white); margin-bottom: 10px; font-weight: 700; }
-  .state-box p { font-size: 0.86rem; line-height: 1.8; }
+  .state-box { text-align: center; padding: 30px 20px; color: var(--muted); }
+  .state-box .s-icon { font-size: 2rem; margin-bottom: 10px; }
+  .state-box h3 { font-size: 1rem; color: var(--white); margin-bottom: 6px; font-weight: 700; }
+  .state-box p { font-size: 0.84rem; line-height: 1.7; }
 
   /* ══ FOOTER ══ */
   footer {
@@ -258,12 +254,12 @@
     transition: all 0.2s;
   }
   .social-btn:hover { border-color: var(--gold); color: var(--gold-light); background: var(--surface2); }
-  .social-btn .s-ic { font-size: 1rem; }
+  .social-btn svg { width: 15px; height: 15px; flex-shrink: 0; fill: currentColor; }
 
   /* ══ MOBILE ══ */
   @media (max-width: 640px) {
     .page-wrap { padding: 0 12px 60px; }
-    header { padding: 30px 12px 24px; }
+    header { padding: 18px 12px 18px; }
     .logo-clock { width: 44px; height: 44px; }
     .logo-ar { font-size: 1.05rem; }
     .logo-wrap { gap: 10px; }
@@ -286,21 +282,7 @@
   <header>
     <!-- شعار الساعة -->
     <div class="logo-wrap">
-      <svg class="logo-clock" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="27" cy="27" r="25" stroke="#c9a84c" stroke-width="2" fill="#0f1419"/>
-        <circle cx="27" cy="27" r="20" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
-        <line x1="27" y1="27" x2="27" y2="11" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="27" y1="27" x2="38" y2="33" stroke="#e8c97a" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="27" cy="27" r="2.5" fill="#c9a84c"/>
-        <circle cx="27" cy="7"  r="1.2" fill="#c9a84c" opacity="0.5"/>
-        <circle cx="27" cy="47" r="1.2" fill="#c9a84c" opacity="0.5"/>
-        <circle cx="7"  cy="27" r="1.2" fill="#c9a84c" opacity="0.5"/>
-        <circle cx="47" cy="27" r="1.2" fill="#c9a84c" opacity="0.5"/>
-      </svg>
-      <div class="logo-text-wrap">
-        <div class="logo-ar">شبكة الساعة الإعلامية</div>
-        <div class="logo-en">Alssaa Network</div>
-      </div>
+      <img class="logo-img" src="https://alssaa.com/images/logo.svg" alt="شبكة الساعة الإعلامية">
     </div>
 
     <!-- علم العراق -->
@@ -365,19 +347,24 @@
   <div class="footer-copy">خاصة بشبكة الساعة — جميع الحقوق محفوظة &copy; 2025</div>
   <div class="social-links">
     <a href="https://alssaa.com/" target="_blank" class="social-btn">
-      <span class="s-ic">🌐</span> الموقع الرسمي
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93V18a1 1 0 00-1-1H8a2 2 0 01-2-2v-1l-1.8-1.8A8.008 8.008 0 014 12c0-4.418 3.582-8 8-8v.07c-.34.05-.67.12-1 .21v1.02c-.31.09-.6.21-.88.35l-.5-.5a7.1 7.1 0 00-1.24 1.24l.5.5c-.14.28-.26.57-.35.88H7.5a1 1 0 00-1 1v2a1 1 0 001 1H9v1a1 1 0 001 1h1v1.93zm9-5.1l-1.5-1.5V12a5 5 0 00-5-5v-.93A8.008 8.008 0 0120 12c0 .95-.17 1.86-.47 2.71l-.53-.88z"/></svg>
+      Website
     </a>
     <a href="https://www.youtube.com/@alssaanetwork" target="_blank" class="social-btn">
-      <span class="s-ic">▶️</span> يوتيوب
+      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      YouTube
     </a>
     <a href="https://t.me/alssaanetwork" target="_blank" class="social-btn">
-      <span class="s-ic">✈️</span> تيليغرام
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Telegram
     </a>
     <a href="https://www.instagram.com/alssaanetwork" target="_blank" class="social-btn">
-      <span class="s-ic">📸</span> إنستغرام
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      Instagram
     </a>
     <a href="https://x.com/alssaanetwork" target="_blank" class="social-btn">
-      <span class="s-ic">🐦</span> X (تويتر)
+      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      X
     </a>
   </div>
 </footer>
