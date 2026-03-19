@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نتائج الانتخابات العراقية — بحث المرشحين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --red: #8b1a1a;
+    --red-light: #c0392b;
+    --green: #1a4a2e;
+    --green-light: #27ae60;
+    --card-bg: #111111;
+    --border: rgba(201,168,76,0.25);
+    --text-muted: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Tajawal', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* background pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(201,168,76,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(139,26,26,0.06) 0%, transparent 50%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(201,168,76,0.015) 40px,
+        rgba(201,168,76,0.015) 41px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    text-align: center;
+    padding: 50px 20px 40px;
+    position: relative;
+  }
+
+  .flag-bar {
+    display: flex;
+    height: 5px;
+    width: 120px;
+    margin: 0 auto 30px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .flag-bar span:nth-child(1) { background: var(--red-light); flex: 1; }
+  .flag-bar span:nth-child(2) { background: var(--white); flex: 1; }
+  .flag-bar span:nth-child(3) { background: #1a5c2a; flex: 1; }
+
+  header h1 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    color: var(--white);
+  }
+
+  header h1 span {
+    color: var(--gold);
+  }
+
+  header p {
+    margin-top: 12px;
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  /* ─── YEAR TABS ─── */
+  .year-tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 30px 0 0;
+  }
+
+  .year-tab {
+    padding: 8px 24px;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .year-tab:hover { border-color: var(--gold); color: var(--gold); }
+  .year-tab.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+    font-weight: 700;
+  }
+
+  /* ─── SEARCH BOX ─── */
+  .search-wrapper {
+    margin: 30px 0 0;
+    position: relative;
+  }
+
+  .search-box {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 60px 18px 24px;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.25s, background 0.25s;
+    text-align: right;
+  }
+
+  .search-box::placeholder { color: #555; }
+  .search-box:focus {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    font-size: 1.3rem;
+    pointer-events: none;
+  }
+
+  .search-hint {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: #555;
+    text-align: center;
+  }
+
+  .search-hint strong { color: var(--gold); }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    display: flex;
+    gap: 16px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-chip {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stat-chip .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  /* ─── LOADING ─── */
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid rgba(201,168,76,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ─── RESULTS ─── */
+  .results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .results-count {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .results-count strong { color: var(--gold); font-size: 1.1rem; }
+
+  .results-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ─── CARD ─── */
+  .result-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    transition: border-color 0.2s, transform 0.15s;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .result-card:hover {
+    border-color: rgba(201,168,76,0.5);
+    transform: translateY(-1px);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .candidate-name {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .year-badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .year-badge.y2025 { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .year-badge.y2021 { background: rgba(139,26,26,0.2); color: #e07070; border: 1px solid rgba(139,26,26,0.4); }
+
+  .card-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px 16px;
+  }
+
+  .field-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .field-label {
+    font-size: 0.72rem;
+    color: #555;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .field-value {
+    font-size: 0.88rem;
+    color: #ccc;
+    font-weight: 400;
+  }
+
+  .field-value.highlight {
+    color: var(--gold-light);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  /* ─── EMPTY / ERROR STATES ─── */
+  .state-box {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+  }
+
+  .state-box .icon { font-size: 3rem; margin-bottom: 16px; }
+  .state-box h3 { font-size: 1.1rem; color: var(--white); margin-bottom: 8px; }
+  .state-box p { font-size: 0.88rem; line-height: 1.7; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #444;
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 40px;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .card-fields { grid-template-columns: 1fr 1fr; }
+    .stats-bar { gap: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="flag-bar"><span></span><span></span><span></span></div>
+    <h1>بحث نتائج<br><span>الانتخابات العراقية</span></h1>
+    <p>انتخابات مجلس النواب · 2021 و 2025</p>
+
+    <div class="year-tabs">
+      <button class="year-tab active" data-year="all">الكل</button>
+      <button class="year-tab" data-year="2025">2025</button>
+      <button class="year-tab" data-year="2021">2021</button>
+    </div>
+  </header>
+
+  <div class="search-wrapper">
+    <input
+      type="text"
+      class="search-box"
+      id="searchInput"
+      placeholder="اكتب اسم المرشح... مثال: أحمد محمد الجابري"
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <span class="search-icon">🔍</span>
+  </div>
+  <p class="search-hint">
+    ابحث بـ <strong>الاسم الثنائي</strong> أو <strong>الثلاثي</strong> أو <strong>اللقب</strong> أو <strong>اسم + اسم الجد</strong>
+  </p>
+
+  <div class="stats-bar" id="statsBar" style="display:none">
+    <div class="stat-chip"><span class="dot" style="background:#c0392b"></span><span id="stat2021">جاري التحميل...</span></div>
+    <div class="stat-chip"><span class="dot"></span><span id="stat2025">جاري التحميل...</span></div>
+  </div>
+
+  <div id="mainArea">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>جاري تحميل البيانات...</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  بيانات رسمية مستخرجة من نتائج الانتخابات العراقية &nbsp;·&nbsp; للأغراض البحثية والصحفية
+</footer>
+
+<script>
+// ─── CONFIG ────────────────────────────────────────────────────────────────────
+const URLS = {
+  "2025": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=863852432&single=true&output=csv",
+  "2021": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=0&single=true&output=csv"
+};
+
+// أعمدة الاسم المحتملة (بالأولوية)
+const NAME_COLS = ["الاسم", "اسم المرشح", "الاسم الكامل", "الاسم الثلاثي", "المرشح", "اسم", "name", "candidate", "full_name"];
+
+// أعمدة مهمة تظهر بشكل بارز
+const HIGHLIGHT_COLS = ["الأصوات", "عدد الأصوات", "votes", "الرصيد", "المقاعد", "الفائز", "الحالة", "النتيجة"];
+
+// ─── STATE ─────────────────────────────────────────────────────────────────────
+let data = { "2025": [], "2021": [] };
+let headers = { "2025": [], "2021": [] };
+let nameCol = { "2025": null, "2021": null };
+let activeYear = "all";
+let searchTimeout = null;
+
+// ─── CSV PARSER ────────────────────────────────────────────────────────────────
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return { headers: [], rows: [] };
+
+  const parseRow = line => {
+    const cols = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur.trim());
+    return cols;
+  };
+
+  const hdrs = parseRow(lines[0]);
+  const rows = lines.slice(1).map(l => {
+    const vals = parseRow(l);
+    const obj = {};
+    hdrs.forEach((h, i) => { obj[h] = vals[i] || ''; });
+    return obj;
+  }).filter(r => Object.values(r).some(v => v.trim()));
+
+  return { headers: hdrs, rows };
+}
+
+// ─── ARABIC NORMALIZE ──────────────────────────────────────────────────────────
+function norm(str) {
+  if (!str) return '';
+  return str
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/ؤ/g, 'و')
+    .replace(/ئ/g, 'ي')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// ─── FIND NAME COLUMN ──────────────────────────────────────────────────────────
+function findNameCol(hdrs) {
+  for (const nc of NAME_COLS) {
+    const found = hdrs.find(h => h.trim().toLowerCase().includes(nc.toLowerCase()));
+    if (found) return found;
+  }
+  return hdrs[0] || null;
+}
+
+// ─── LOAD DATA ─────────────────────────────────────────────────────────────────
+async function loadData() {
+  const results = await Promise.allSettled(
+    Object.entries(URLS).map(async ([year, url]) => {
+      const res = await fetch(url);
+      const text = await res.text();
+      const parsed = parseCSV(text);
+      data[year] = parsed.rows;
+      headers[year] = parsed.headers;
+      nameCol[year] = findNameCol(parsed.headers);
+      return year;
+    })
+  );
+
+  // update stats
+  document.getElementById('stat2021').textContent = `انتخابات 2021: ${data['2021'].length.toLocaleString('ar-IQ')} مرشح`;
+  document.getElementById('stat2025').textContent = `انتخابات 2025: ${data['2025'].length.toLocaleString('ar-IQ')} مرشح`;
+  document.getElementById('statsBar').style.display = 'flex';
+
+  showWelcome();
+}
+
+// ─── SEARCH ────────────────────────────────────────────────────────────────────
+function search(query) {
+  const q = norm(query).toLowerCase();
+  const parts = q.split(' ').filter(p => p.length > 0);
+  if (parts.length === 0) return [];
+
+  const years = activeYear === 'all' ? ['2025', '2021'] : [activeYear];
+  const results = [];
+
+  for (const year of years) {
+    const nc = nameCol[year];
+    if (!nc) continue;
+
+    for (const row of data[year]) {
+      const name = norm(row[nc] || '').toLowerCase();
+      if (parts.every(p => name.includes(p))) {
+        results.push({ ...row, __year: year, __nameCol: nc });
+      }
+    }
+  }
+
+  return results;
+}
+
+// ─── RENDER CARD ───────────────────────────────────────────────────────────────
+function renderCard(row, idx) {
+  const year = row.__year;
+  const nc = row.__nameCol;
+  const name = row[nc] || '—';
+
+  const skipCols = new Set([nc, '__year', '__nameCol']);
+  const entries = Object.entries(row).filter(([k]) => !skipCols.has(k));
+
+  const isHighlight = col => HIGHLIGHT_COLS.some(h => col.toLowerCase().includes(h.toLowerCase()));
+
+  const fieldsHtml = entries
+    .filter(([, v]) => v && v.trim() && v !== '—')
+    .map(([k, v]) => `
+      <div class="field-item">
+        <span class="field-label">${k}</span>
+        <span class="field-value ${isHighlight(k) ? 'highlight' : ''}">${v}</span>
+      </div>
+    `).join('');
+
+  return `
+    <div class="result-card" style="animation-delay:${idx * 0.04}s">
+      <div class="card-header">
+        <div class="candidate-name">${name}</div>
+        <span class="year-badge y${year}">🗳️ ${year}</span>
+      </div>
+      ${fieldsHtml ? `<div class="card-fields">${fieldsHtml}</div>` : ''}
+    </div>
+  `;
+}
+
+// ─── SHOW STATES ───────────────────────────────────────────────────────────────
+function showWelcome() {
+  document.getElementById('mainArea').innerHTML = `
+    <div class="state-box">
+      <div class="icon">🔍</div>
+      <h3>ابدأ البحث</h3>
+      <p>اكتب اسم المرشح في حقل البحث أعلاه<br>يمكنك البحث بالاسم الثنائي أو الثلاثي أو اللقب</p>
+    </div>
+  `;
+}
+
+function showResults(results, query) {
+  const area = document.getElementById('mainArea');
+  if (results.length === 0) {
+    area.innerHTML = `
+      <div class="state-box">
+        <div class="icon">😶</div>
+        <h3>لا توجد نتائج لـ "${query}"</h3>
+        <p>
+          تأكد من الكتابة الصحيحة · جرب جزءاً من الاسم<br>
+          جرب اللقب وحده · أو اسم الأب منفرداً
+        </p>
+      </div>
+    `;
+    return;
+  }
+
+  const shown = results.slice(0, 50);
+  const more = results.length - shown.length;
+
+  area.innerHTML = `
+    <div class="results-header">
+      <div class="results-count">وُجد <strong>${results.length.toLocaleString('ar-IQ')}</strong> نتيجة</div>
+      ${more > 0 ? `<span style="font-size:.82rem;color:#555">يُعرض أول 50 — دقّق البحث للمزيد</span>` : ''}
+    </div>
+    <div class="results-grid">
+      ${shown.map((r, i) => renderCard(r, i)).join('')}
+    </div>
+  `;
+}
+
+// ─── EVENTS ────────────────────────────────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', e => {
+  clearTimeout(searchTimeout);
+  const q = e.target.value.trim();
+  if (q.length < 2) { showWelcome(); return; }
+
+  searchTimeout = setTimeout(() => {
+    const results = search(q);
+    showResults(results, q);
+  }, 300);
+});
+
+document.querySelectorAll('.year-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeYear = btn.dataset.year;
+
+    const q = document.getElementById('searchInput').value.trim();
+    if (q.length >= 2) showResults(search(q), q);
+    else showWelcome();
+  });
+});
+
+// ─── INIT ──────────────────────────────────────────────────────────────────────
+loadData().catch(err => {
+  document.getElementById('mainArea').innerHTML = `
+    <div class="state-box">
+      <div class="icon">⚠️</div>
+      <h3>تعذّر تحميل البيانات</h3>
+      <p>تأكد من أن روابط Google Sheets مفتوحة للعموم<br>ثم أعد تحميل الصفحة</p>
+    </div>
+  `;
+  console.error(err);
+});
+</script>
+</body>
+</html>
