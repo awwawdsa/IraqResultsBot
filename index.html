@@ -3,274 +3,535 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>موقع نتائج الانتخابات النيابية 2021 و2025 — شبكة الساعة الإعلامية</title>
+<title>نتائج الانتخابات 2021 و2023 و2025 — شبكة الساعة الإعلامية</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #eef2f7;
     --surface: #ffffff;
     --surface2: #f5f7fa;
+    --ink: #1c2b3a;
+    --muted: #7a8ea3;
     --gold: #b07d20;
     --gold-light: #c9952a;
-    --gold-dim: rgba(176,125,32,0.1);
+    --gold-dim: rgba(176, 125, 32, 0.1);
     --red: #b83227;
-    --red-dim: rgba(184,50,39,0.09);
-    --white: #1c2b3a;
-    --muted: #7a8ea3;
-    --border: rgba(176,125,32,0.22);
-    --border2: rgba(28,43,58,0.1);
-    --card: #ffffff;
-    --card-hover: #f8fafc;
-    --shadow: 0 2px 16px rgba(28,43,58,0.09);
+    --red-dim: rgba(184, 50, 39, 0.09);
+    --green: #1f7a4a;
+    --green-dim: rgba(31, 122, 74, 0.09);
+    --border: rgba(176, 125, 32, 0.22);
+    --border2: rgba(28, 43, 58, 0.1);
+    --shadow: 0 2px 16px rgba(28, 43, 58, 0.09);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
 
   body {
-    background: linear-gradient(145deg, #dde8f4 0%, #eef2f7 40%, #e8f0e8 70%, #f0eadc 100%);
-    color: var(--white);
-    font-family: 'Tajawal', sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    background: linear-gradient(145deg, #dde8f4 0%, #eef2f7 40%, #e8f0e8 70%, #f0eadc 100%);
+    color: var(--ink);
+    font-family: "Tajawal", sans-serif;
   }
 
   body::before {
-    content: '';
-    position: fixed; inset: 0;
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
     background:
-      radial-gradient(ellipse 70% 50% at 20% 10%, rgba(176,125,32,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 60% at 80% 90%, rgba(26,100,58,0.06) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 40% at 90% 10%, rgba(184,50,39,0.05) 0%, transparent 50%);
-    pointer-events: none; z-index: 0;
+      radial-gradient(ellipse 70% 50% at 20% 10%, rgba(176, 125, 32, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 90%, rgba(31, 122, 74, 0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 90% 10%, rgba(184, 50, 39, 0.05) 0%, transparent 50%);
   }
 
   .page-wrap {
-    position: relative; z-index: 1;
-    max-width: 960px; margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
     padding: 0 16px 80px;
   }
 
-  /* ══ HEADER ══ */
-  header { text-align: center; padding: 24px 16px 20px; }
+  header {
+    padding: 24px 16px 20px;
+    text-align: center;
+  }
 
   .logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 14px;
-    display: flex; align-items: center; justify-content: center;
   }
 
-  .logo-img { height: 52px; width: auto; }
-
+  .logo-img {
+    width: auto;
+    height: 52px;
   }
-  .flag-red   { background: #cc2929; flex: 1; }
-  .flag-white { background: #fff; flex: 1; display: flex; align-items: center; justify-content: center; }
-  .flag-black { background: #111; flex: 1; }
-  .flag-white span { font-size: 9px; color: #1a7a3a; font-weight: 900; font-family: serif; }
 
   header h1 {
+    color: var(--ink);
     font-size: clamp(1.55rem, 4.5vw, 2.4rem);
-    font-weight: 900; line-height: 1.25; color: var(--white);
+    font-weight: 900;
+    line-height: 1.25;
   }
-  header h1 em { font-style: normal; color: var(--gold); }
-  .header-sub { margin-top: 10px; font-size: 0.92rem; color: var(--muted); }
 
-  /* ══ TABS ══ */
+  header h1 em {
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .header-sub {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
   .year-tabs {
-    display: flex; gap: 8px; justify-content: center;
-    margin: 26px 0 0; flex-wrap: wrap;
-  }
-  .year-tab {
-    padding: 9px 22px; border: 1.5px solid var(--border); border-radius: 50px;
-    background: transparent; color: var(--muted);
-    font-family: 'Tajawal', sans-serif; font-size: 0.92rem; font-weight: 600;
-    cursor: pointer; transition: all 0.2s;
-  }
-  .year-tab:hover { border-color: var(--gold); color: var(--gold-light); }
-  .year-tab.active {
-    background: linear-gradient(135deg, #c9a84c, #a8832a);
-    border-color: transparent; color: #0a0a0a; font-weight: 800;
-    box-shadow: 0 2px 12px rgba(201,168,76,0.35);
-  }
-  .year-tab.t2021.active {
-    background: linear-gradient(135deg, #cc3333, #991a1a);
-    color: #fff; box-shadow: 0 2px 12px rgba(204,43,43,0.4);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 26px 0 0;
   }
 
-  /* ══ SEARCH ══ */
+  .year-tab {
+    padding: 9px 22px;
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .year-tab:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .year-tab.active {
+    color: #0a0a0a;
+    border-color: transparent;
+    background: linear-gradient(135deg, #c9a84c, #a8832a);
+    box-shadow: 0 2px 12px rgba(201, 168, 76, 0.35);
+  }
+
+  .year-tab.t2023.active {
+    color: #fff;
+    background: linear-gradient(135deg, #238957, #176b42);
+    box-shadow: 0 2px 12px rgba(31, 122, 74, 0.35);
+  }
+
+  .year-tab.t2021.active {
+    color: #fff;
+    background: linear-gradient(135deg, #cc3333, #991a1a);
+    box-shadow: 0 2px 12px rgba(204, 43, 43, 0.4);
+  }
+
   .search-section { margin: 28px 0 0; }
   .search-wrapper { position: relative; }
-  .search-box {
-    width: 100%; background: #ffffff; border: 1.5px solid rgba(28,43,58,0.15);
-    border-radius: 16px; padding: 17px 56px 17px 20px;
-    font-family: 'Tajawal', sans-serif; font-size: 1.05rem; color: var(--white);
-    outline: none; transition: all 0.25s; text-align: right;
-    box-shadow: 0 1px 6px rgba(28,43,58,0.06);
-  }
-  .search-box::placeholder { color: #aab8c7; }
-  .search-box:focus {
-    border-color: var(--gold); background: #fff;
-    box-shadow: 0 0 0 3px rgba(176,125,32,0.12);
-  }
-  .search-icon {
-    position: absolute; left: 18px; top: 50%; transform: translateY(-50%);
-    font-size: 1.2rem; pointer-events: none; opacity: 0.6;
-  }
-  .search-hint { margin-top: 9px; font-size: 0.8rem; color: var(--muted); text-align: center; }
 
-  /* ══ STATS ══ */
+  .search-box {
+    width: 100%;
+    padding: 17px 56px 17px 20px;
+    border: 1.5px solid rgba(28, 43, 58, 0.15);
+    border-radius: 16px;
+    outline: none;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(28, 43, 58, 0.06);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 1.05rem;
+    text-align: right;
+    transition: 0.25s ease;
+  }
+
+  .search-box::placeholder { color: #aab8c7; }
+
+  .search-box:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(176, 125, 32, 0.12);
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    transform: translateY(-50%);
+    opacity: 0.6;
+    font-size: 1.2rem;
+    pointer-events: none;
+  }
+
+  .search-hint {
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
   .stats-bar {
-    display: flex; gap: 10px; margin: 20px 0 0;
-    flex-wrap: wrap; justify-content: center;
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0 0;
   }
+
   .stat-chip {
-    padding: 6px 14px; border: 1px solid rgba(28,43,58,0.1); border-radius: 50px;
-    font-size: 0.78rem; color: var(--muted);
-    display: flex; align-items: center; gap: 7px; background: #fff;
-    box-shadow: 0 1px 4px rgba(28,43,58,0.06);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border: 1px solid var(--border2);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(28, 43, 58, 0.06);
+    color: var(--muted);
+    font-size: 0.78rem;
   }
-  .stat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  .stat-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
 
   .divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(28,43,58,0.12), transparent);
     margin: 28px 0;
+    background: linear-gradient(90deg, transparent, rgba(28, 43, 58, 0.12), transparent);
   }
 
-  /* ══ LOADING ══ */
-  .loading { text-align: center; padding: 70px 20px; color: var(--muted); }
-  .spinner {
-    width: 38px; height: 38px; border: 3px solid rgba(176,125,32,0.15);
-    border-top-color: var(--gold); border-radius: 50%;
-    animation: spin 0.75s linear infinite; margin: 0 auto 18px;
+  .loading,
+  .state-box {
+    padding: 48px 20px;
+    color: var(--muted);
+    text-align: center;
   }
+
+  .spinner {
+    width: 38px;
+    height: 38px;
+    margin: 0 auto 18px;
+    border: 3px solid rgba(176, 125, 32, 0.15);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+  }
+
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ══ RESULTS META ══ */
+  .state-box .s-icon {
+    margin-bottom: 10px;
+    font-size: 2rem;
+  }
+
+  .state-box h3 {
+    margin-bottom: 6px;
+    color: #2a3d52;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
+  .state-box p {
+    color: #8a9eb0;
+    font-size: 0.84rem;
+    line-height: 1.7;
+  }
+
   .results-meta {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
   }
-  .results-count { font-size: 0.88rem; color: var(--muted); }
-  .results-count strong { color: var(--gold); font-size: 1.05rem; font-weight: 800; }
+
+  .results-count {
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .results-count strong {
+    color: var(--gold);
+    font-size: 1.05rem;
+    font-weight: 900;
+  }
+
   .results-note {
-    font-size: 0.75rem; color: #8a9eb0; background: #fff;
-    padding: 4px 10px; border-radius: 50px; border: 1px solid rgba(28,43,58,0.1);
+    padding: 4px 10px;
+    border: 1px solid var(--border2);
+    border-radius: 999px;
+    background: #fff;
+    color: #8a9eb0;
+    font-size: 0.75rem;
   }
 
-  /* ══ YEAR SECTION HEADER ══ */
   .year-section-header {
-    display: flex; align-items: center; gap: 12px; margin: 24px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 12px;
   }
-  .ys-line { flex: 1; height: 1px; }
-  .ys-label {
-    font-size: 0.8rem; font-weight: 700; padding: 4px 14px;
-    border-radius: 50px; letter-spacing: 0.5px; flex-shrink: 0;
-  }
-  .ys-2025 .ys-line { background: linear-gradient(90deg, transparent, rgba(176,125,32,0.35)); }
-  .ys-2025 .ys-line:last-child { background: linear-gradient(90deg, rgba(176,125,32,0.35), transparent); }
-  .ys-2025 .ys-label { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(176,125,32,0.25); }
-  .ys-2021 .ys-line { background: linear-gradient(90deg, transparent, rgba(184,50,39,0.3)); }
-  .ys-2021 .ys-line:last-child { background: linear-gradient(90deg, rgba(184,50,39,0.3), transparent); }
-  .ys-2021 .ys-label { background: var(--red-dim); color: var(--red); border: 1px solid rgba(184,50,39,0.25); }
 
-  /* ══ CARDS ══ */
-  .results-grid { display: flex; flex-direction: column; gap: 10px; }
+  .ys-line {
+    height: 1px;
+    flex: 1;
+  }
+
+  .ys-label {
+    flex-shrink: 0;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+
+  .ys-2025 .ys-line { background: linear-gradient(90deg, transparent, rgba(176, 125, 32, 0.35)); }
+  .ys-2025 .ys-line:last-child { background: linear-gradient(90deg, rgba(176, 125, 32, 0.35), transparent); }
+  .ys-2025 .ys-label {
+    border: 1px solid rgba(176, 125, 32, 0.25);
+    background: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  .ys-2023 .ys-line { background: linear-gradient(90deg, transparent, rgba(31, 122, 74, 0.3)); }
+  .ys-2023 .ys-line:last-child { background: linear-gradient(90deg, rgba(31, 122, 74, 0.3), transparent); }
+  .ys-2023 .ys-label {
+    border: 1px solid rgba(31, 122, 74, 0.25);
+    background: var(--green-dim);
+    color: var(--green);
+  }
+
+  .ys-2021 .ys-line { background: linear-gradient(90deg, transparent, rgba(184, 50, 39, 0.3)); }
+  .ys-2021 .ys-line:last-child { background: linear-gradient(90deg, rgba(184, 50, 39, 0.3), transparent); }
+  .ys-2021 .ys-label {
+    border: 1px solid rgba(184, 50, 39, 0.25);
+    background: var(--red-dim);
+    color: var(--red);
+  }
+
+  .results-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
   .result-card {
-    background: var(--card); border: 1px solid rgba(28,43,58,0.1); border-radius: 14px;
-    padding: 18px 20px; transition: all 0.2s; animation: fadeUp 0.3s ease both;
-    position: relative; overflow: hidden;
-    box-shadow: 0 1px 8px rgba(28,43,58,0.06);
+    position: relative;
+    overflow: hidden;
+    padding: 18px 20px;
+    border: 1px solid var(--border2);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 1px 8px rgba(28, 43, 58, 0.06);
+    animation: fadeUp 0.3s ease both;
+    transition: 0.2s ease;
   }
+
   .result-card::before {
-    content: ''; position: absolute; top: 0; right: 0;
-    width: 3px; height: 100%; border-radius: 0 14px 14px 0;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 0 14px 14px 0;
   }
+
   .result-card.c2025::before { background: linear-gradient(180deg, var(--gold), transparent); }
+  .result-card.c2023::before { background: linear-gradient(180deg, var(--green), transparent); }
   .result-card.c2021::before { background: linear-gradient(180deg, var(--red), transparent); }
+
   .result-card:hover {
-    background: var(--card-hover);
-    border-color: rgba(176,125,32,0.3); box-shadow: var(--shadow);
+    border-color: rgba(176, 125, 32, 0.3);
+    background: #f8fafc;
+    box-shadow: var(--shadow);
     transform: translateY(-1px);
   }
+
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .card-top {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 10px; margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 14px;
   }
-  .candidate-name { font-size: 1.08rem; font-weight: 800; color: var(--white); line-height: 1.35; flex: 1; }
 
-  .year-badge {
-    padding: 3px 11px; border-radius: 50px; font-size: 0.73rem;
-    font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  .candidate-name {
+    flex: 1;
+    color: var(--ink);
+    font-size: 1.08rem;
+    font-weight: 900;
+    line-height: 1.35;
   }
-  .year-badge.b2025 { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(176,125,32,0.25); }
-  .year-badge.b2021 { background: var(--red-dim); color: var(--red); border: 1px solid rgba(184,50,39,0.25); }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .badge {
+    flex-shrink: 0;
+    padding: 3px 11px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .badge.b2025 {
+    border: 1px solid rgba(176, 125, 32, 0.25);
+    background: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  .badge.b2023 {
+    border: 1px solid rgba(31, 122, 74, 0.25);
+    background: var(--green-dim);
+    color: var(--green);
+  }
+
+  .badge.b2021 {
+    border: 1px solid rgba(184, 50, 39, 0.25);
+    background: var(--red-dim);
+    color: var(--red);
+  }
+
+  .badge.type {
+    border: 1px solid rgba(28, 43, 58, 0.1);
+    background: #f4f7fb;
+    color: #64788c;
+  }
 
   .card-fields {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 8px 12px;
   }
+
   .field-item {
-    display: flex; flex-direction: column; gap: 3px;
-    padding: 8px 10px; background: #f4f7fb;
-    border-radius: 8px; border: 1px solid rgba(28,43,58,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 10px;
+    border: 1px solid rgba(28, 43, 58, 0.07);
+    border-radius: 8px;
+    background: #f4f7fb;
   }
+
   .field-label {
-    font-size: 0.67rem; color: #9aabb8; font-weight: 600;
-    letter-spacing: 0.5px; text-transform: uppercase;
+    color: #9aabb8;
+    font-size: 0.67rem;
+    font-weight: 700;
   }
-  .field-value { font-size: 0.87rem; color: #3a4f63; line-height: 1.4; word-break: break-word; }
-  .field-value.hi { color: var(--gold); font-weight: 700; font-size: 0.97rem; }
 
-  /* ══ STATE BOXES ══ */
-  .state-box { text-align: center; padding: 30px 20px; color: var(--muted); }
-  .state-box .s-icon { font-size: 2rem; margin-bottom: 10px; }
-  .state-box h3 { font-size: 1rem; color: #2a3d52; margin-bottom: 6px; font-weight: 700; }
-  .state-box p { font-size: 0.84rem; line-height: 1.7; color: #8a9eb0; }
+  .field-value {
+    color: #3a4f63;
+    font-size: 0.87rem;
+    line-height: 1.4;
+    word-break: break-word;
+  }
 
-  /* ══ FOOTER ══ */
+  .field-value.hi {
+    color: var(--gold);
+    font-size: 0.97rem;
+    font-weight: 900;
+  }
+
   footer {
-    border-top: 1px solid rgba(28,43,58,0.1);
-    margin-top: 50px; padding: 36px 16px 24px; text-align: center;
-    background: rgba(255,255,255,0.5);
+    margin-top: 50px;
+    padding: 36px 16px 24px;
+    border-top: 1px solid var(--border2);
+    background: rgba(255, 255, 255, 0.5);
+    text-align: center;
   }
-  .footer-logo { font-size: 1rem; font-weight: 800; color: var(--gold); margin-bottom: 6px; }
-  .footer-copy { font-size: 0.78rem; color: var(--muted); margin-bottom: 20px; }
-  .social-links {
-    display: flex; align-items: center; justify-content: center;
-    gap: 8px; flex-wrap: wrap;
-  }
-  .social-btn {
-    display: flex; align-items: center; gap: 6px;
-    padding: 7px 14px; border-radius: 50px;
-    border: 1px solid rgba(28,43,58,0.13); background: #fff;
-    color: #5a6e82; text-decoration: none;
-    font-size: 0.78rem; font-family: 'Tajawal', sans-serif; font-weight: 600;
-    transition: all 0.2s; box-shadow: 0 1px 4px rgba(28,43,58,0.07);
-  }
-  .social-btn:hover { border-color: var(--gold); color: var(--gold); background: #fffbf4; }
-  .social-btn svg { width: 15px; height: 15px; flex-shrink: 0; fill: currentColor; }
 
-  /* ══ MOBILE ══ */
+  .footer-logo {
+    margin-bottom: 6px;
+    color: var(--gold);
+    font-size: 1rem;
+    font-weight: 900;
+  }
+
+  .footer-copy {
+    margin-bottom: 20px;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .social-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid rgba(28, 43, 58, 0.13);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(28, 43, 58, 0.07);
+    color: #5a6e82;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s ease;
+  }
+
+  .social-btn:hover {
+    border-color: var(--gold);
+    background: #fffbf4;
+    color: var(--gold);
+  }
+
+  .social-btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
   @media (max-width: 640px) {
     .page-wrap { padding: 0 12px 60px; }
-    header { padding: 18px 12px 18px; }
-    .logo-clock { width: 44px; height: 44px; }
-    .logo-ar { font-size: 1.05rem; }
-    .logo-wrap { gap: 10px; }
-    .year-tabs { gap: 6px; }
-    .year-tab { padding: 7px 14px; font-size: 0.83rem; }
-    .result-card { padding: 14px 14px; }
+    header { padding: 18px 12px; }
+    .year-tab {
+      padding: 7px 14px;
+      font-size: 0.83rem;
+    }
+    .result-card { padding: 14px; }
     .card-fields { grid-template-columns: 1fr 1fr; }
-    .social-links { gap: 6px; }
-    .social-btn { padding: 6px 10px; font-size: 0.72rem; }
+    .social-btn {
+      padding: 6px 10px;
+      font-size: 0.72rem;
+    }
   }
+
   @media (max-width: 400px) {
     header h1 { font-size: 1.35rem; }
     .card-fields { grid-template-columns: 1fr; }
@@ -279,266 +540,409 @@
 </head>
 <body>
 <div class="page-wrap">
-
   <header>
-    <!-- شعار الساعة -->
     <div class="logo-wrap">
       <img class="logo-img" src="https://alssaa.com/images/logo.svg" alt="شبكة الساعة الإعلامية">
     </div>
 
-  
-    <h1>موقع نتائج <em>الانتخابات النيابية</em><br>2021 و 2025</h1>
-    <p class="header-sub">ابحث عن أي مرشح في انتخابات مجلس النواب العراقي</p>
+    <h1>موقع نتائج <em>الانتخابات</em><br>2021 و2023 و2025</h1>
+    <p class="header-sub">ابحث عن أي مرشح في الانتخابات النيابية والمحلية العراقية</p>
 
-    <div class="year-tabs">
+    <div class="year-tabs" id="yearTabs">
       <button class="year-tab active" data-year="all">الكل</button>
-      <button class="year-tab t2025" data-year="2025">2025</button>
-      <button class="year-tab t2021" data-year="2021">2021</button>
+      <button class="year-tab t2025" data-year="2025">2025 نيابية</button>
+      <button class="year-tab t2023" data-year="2023">2023 محلية</button>
+      <button class="year-tab t2021" data-year="2021">2021 نيابية</button>
     </div>
   </header>
 
-  <!-- SEARCH -->
-  <div class="search-section">
-    <div class="search-wrapper">
-      <input
-        type="text"
-        class="search-box"
-        id="searchInput"
-        placeholder="ابحث عن المرشح في نتائج انتخابات 2021 أو 2025 النيابية..."
-        autocomplete="off"
-        spellcheck="false"
-      >
-      <span class="search-icon">🔍</span>
-    </div>
-    <p class="search-hint">ابحث بالاسم الثنائي أو الثلاثي أو اللقب أو اسم المرشح واسم جده</p>
-  </div>
+  <main>
+    <section class="search-section">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          class="search-box"
+          id="searchInput"
+          placeholder="ابحث باسم المرشح في نتائج 2021 أو 2023 أو 2025..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <span class="search-icon">🔍</span>
+      </div>
+      <p class="search-hint">ابحث بالاسم الثنائي أو الثلاثي أو اللقب أو اسم المرشح واسم جده</p>
+    </section>
 
-  <!-- STATS -->
-  <div class="stats-bar" id="statsBar" style="display:none">
-    <div class="stat-chip">
-      <span class="stat-dot" style="background:#cc3333"></span>
-      <span id="stat2021">جاري التحميل...</span>
-    </div>
-    <div class="stat-chip">
-      <span class="stat-dot" style="background:#c9a84c"></span>
-      <span id="stat2025">جاري التحميل...</span>
-    </div>
-  </div>
+    <section class="stats-bar" id="statsBar" aria-live="polite">
+      <div class="stat-chip">
+        <span class="stat-dot" style="background:#c9a84c"></span>
+        <span id="stat2025">جاري التحميل...</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-dot" style="background:#238957"></span>
+        <span id="stat2023">جاري التحميل...</span>
+      </div>
+      <div class="stat-chip">
+        <span class="stat-dot" style="background:#cc3333"></span>
+        <span id="stat2021">جاري التحميل...</span>
+      </div>
+    </section>
 
-  <div class="divider"></div>
+    <div class="divider"></div>
 
-  <div id="mainArea">
-    <div class="loading">
-      <div class="spinner"></div>
-      <p>جاري تحميل بيانات الانتخابات...</p>
-    </div>
-  </div>
-
+    <section id="mainArea" aria-live="polite">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>جاري تحميل بيانات الانتخابات...</p>
+      </div>
+    </section>
+  </main>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">شبكة الساعة الإعلامية</div>
   <div class="footer-copy">خاصة بشبكة الساعة — جميع الحقوق محفوظة &copy; 2026</div>
   <div class="social-links">
-    <a href="https://alssaa.com/" target="_blank" class="social-btn">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93V18a1 1 0 00-1-1H8a2 2 0 01-2-2v-1l-1.8-1.8A8.008 8.008 0 014 12c0-4.418 3.582-8 8-8v.07c-.34.05-.67.12-1 .21v1.02c-.31.09-.6.21-.88.35l-.5-.5a7.1 7.1 0 00-1.24 1.24l.5.5c-.14.28-.26.57-.35.88H7.5a1 1 0 00-1 1v2a1 1 0 001 1H9v1a1 1 0 001 1h1v1.93zm9-5.1l-1.5-1.5V12a5 5 0 00-5-5v-.93A8.008 8.008 0 0120 12c0 .95-.17 1.86-.47 2.71l-.53-.88z"/></svg>
+    <a href="https://alssaa.com/" target="_blank" rel="noopener" class="social-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93V18a1 1 0 00-1-1H8a2 2 0 01-2-2v-1l-1.8-1.8A8.008 8.008 0 014 12c0-4.418 3.582-8 8-8v.07c-.34.05-.67.12-1 .21v1.02c-.31.09-.6.21-.88.35l-.5-.5a7.1 7.1 0 00-1.24 1.24l.5.5c-.14.28-.26.57-.35.88H7.5a1 1 0 00-1 1v2a1 1 0 001 1H9v1a1 1 0 001 1h1v1.93zm9-5.1l-1.5-1.5V12a5 5 0 00-5-5v-.93A8.008 8.008 0 0120 12c0 .95-.17 1.86-.47 2.71l-.53-.88z"/></svg>
       Website
     </a>
-    <a href="https://www.youtube.com/@alssaanetwork" target="_blank" class="social-btn">
-      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    <a href="https://www.youtube.com/@alssaanetwork" target="_blank" rel="noopener" class="social-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
       YouTube
     </a>
-    <a href="https://t.me/alssaanetwork" target="_blank" class="social-btn">
-      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    <a href="https://t.me/alssaanetwork" target="_blank" rel="noopener" class="social-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
       Telegram
     </a>
-    <a href="https://www.instagram.com/alssaanetwork" target="_blank" class="social-btn">
-      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    <a href="https://www.instagram.com/alssaanetwork" target="_blank" rel="noopener" class="social-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
       Instagram
     </a>
-    <a href="https://x.com/alssaanetwork" target="_blank" class="social-btn">
-      <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    <a href="https://x.com/alssaanetwork" target="_blank" rel="noopener" class="social-btn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       X
     </a>
   </div>
 </footer>
 
 <script>
-const URLS = {
-  "2025": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=863852432&single=true&output=csv",
-  "2021": "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=0&single=true&output=csv"
+const SHEETS = {
+  "2025": {
+    label: "انتخابات 2025",
+    type: "نيابية",
+    color: "#c9a84c",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=863852432&single=true&output=csv",
+    nameColumn: "اسم المرشح",
+    columns: [
+      "تسلسل المرشح",
+      "اسم المرشح",
+      "الجنس",
+      "عدد الأصوات",
+      "الحالة",
+      "اسم الحزب",
+      "رقم الحزب",
+      "المحافظة",
+      "رقم المحافظة"
+    ],
+    highlightColumns: ["عدد الأصوات", "الحالة"]
+  },
+  "2023": {
+    label: "انتخابات مجالس المحافظات 2023",
+    type: "محلية",
+    color: "#238957",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=191845576&single=true&output=csv",
+    nameColumn: "المرشح الفائز",
+    columns: [
+      "المرشح الفائز",
+      "الجنس",
+      "عدد اصوات المرشح",
+      "التحالف",
+      "عدد اصوات القائمة",
+      "عدد مقاعد القائمة",
+      "المحافظة"
+    ],
+    highlightColumns: ["عدد اصوات المرشح", "عدد اصوات القائمة", "عدد مقاعد القائمة"]
+  },
+  "2021": {
+    label: "انتخابات 2021",
+    type: "نيابية",
+    color: "#cc3333",
+    url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHDjLuFn-jGLw0rWyyPmWfv67RZJ35pYBt2cT_ROLqBOQBI_Um102eK1WRMgaOA-HdxUaQgYcbIXHL/pub?gid=0&single=true&output=csv",
+    nameColumn: "اسم المرشح",
+    columns: [
+      "تسلسل المرشح",
+      "اسم المرشح",
+      "الجنس",
+      "عدد الاصوات",
+      "الحالة",
+      "الحزب او التحالف",
+      "المحافظة",
+      "الدائرة الانتخابية"
+    ],
+    highlightColumns: ["عدد الاصوات", "الحالة"]
+  }
 };
-const NAME_COLS = ["الاسم","اسم المرشح","الاسم الكامل","الاسم الثلاثي","المرشح","اسم","name","candidate","full_name"];
-const HIGHLIGHT_COLS = ["الأصوات","عدد الأصوات","votes","الرصيد","المقاعد","الفائز","الحالة","النتيجة","الدرجة","المرتبة"];
 
-let data = { "2025": [], "2021": [] };
-let nameCol = { "2025": null, "2021": null };
+const YEAR_ORDER = ["2025", "2023", "2021"];
+const data = Object.fromEntries(YEAR_ORDER.map(year => [year, []]));
+const loaded = Object.fromEntries(YEAR_ORDER.map(year => [year, false]));
 let activeYear = "all";
 let searchTimeout = null;
 
 function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  if (lines.length < 2) return { headers: [], rows: [] };
-  const parseRow = line => {
-    const cols = []; let cur = '', inQ = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (ch === '"') { inQ = !inQ; }
-      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-      else { cur += ch; }
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      cell += '"';
+      i++;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      row.push(cell.trim());
+      cell = "";
+    } else if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && next === "\n") i++;
+      row.push(cell.trim());
+      if (row.some(value => value !== "")) rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
     }
-    cols.push(cur.trim()); return cols;
-  };
-  const hdrs = parseRow(lines[0]);
-  const rows = lines.slice(1).map(l => {
-    const vals = parseRow(l); const obj = {};
-    hdrs.forEach((h, i) => { obj[h] = vals[i] || ''; });
-    return obj;
-  }).filter(r => Object.values(r).some(v => v.trim()));
-  return { headers: hdrs, rows };
-}
-
-function norm(str) {
-  if (!str) return '';
-  return str.replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')
-            .replace(/ؤ/g,'و').replace(/ئ/g,'ي').replace(/\s+/g,' ').trim();
-}
-
-// تحويل الأرقام إلى إنجليزية
-function toEn(str) {
-  if (!str) return str;
-  return String(str).replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
-}
-
-function findNameCol(hdrs) {
-  for (const nc of NAME_COLS) {
-    const found = hdrs.find(h => h.trim().toLowerCase().includes(nc.toLowerCase()));
-    if (found) return found;
   }
-  return hdrs[0] || null;
+
+  row.push(cell.trim());
+  if (row.some(value => value !== "")) rows.push(row);
+  if (rows.length < 2) return [];
+
+  const headers = rows[0].map(header => header.trim());
+  return rows.slice(1).map(values => {
+    const item = {};
+    headers.forEach((header, index) => {
+      item[header] = values[index] || "";
+    });
+    return item;
+  });
+}
+
+function normalizeText(value) {
+  return String(value || "")
+    .replace(/[أإآ]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
+    .replace(/ؤ/g, "و")
+    .replace(/ئ/g, "ي")
+    .replace(/[٠-٩]/g, digit => "٠١٢٣٤٥٦٧٨٩".indexOf(digit))
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function toEnglishDigits(value) {
+  return String(value || "").replace(/[٠-٩]/g, digit => "٠١٢٣٤٥٦٧٨٩".indexOf(digit));
+}
+
+function escapeHTML(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function formatNumber(value) {
+  return Number(value).toLocaleString("en-US");
+}
+
+function isHighlighted(year, column) {
+  return SHEETS[year].highlightColumns.some(item => normalizeText(item) === normalizeText(column));
+}
+
+function availableYears() {
+  return activeYear === "all" ? YEAR_ORDER : [activeYear];
+}
+
+async function loadSheet(year, config) {
+  if (!config.url) return;
+
+  const response = await fetch(config.url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+  const text = await response.text();
+  data[year] = parseCSV(text);
+  loaded[year] = true;
 }
 
 async function loadData() {
-  await Promise.allSettled(Object.entries(URLS).map(async ([year, url]) => {
-    const res = await fetch(url);
-    const text = await res.text();
-    const parsed = parseCSV(text);
-    data[year] = parsed.rows;
-    nameCol[year] = findNameCol(parsed.headers);
-  }));
-  document.getElementById('stat2021').textContent =
-    `انتخابات 2021: ${data['2021'].length.toLocaleString('en-US')} مرشح`;
-  document.getElementById('stat2025').textContent =
-    `انتخابات 2025: ${data['2025'].length.toLocaleString('en-US')} مرشح`;
-  document.getElementById('statsBar').style.display = 'flex';
+  await Promise.allSettled(YEAR_ORDER.map(year => loadSheet(year, SHEETS[year])));
+
+  YEAR_ORDER.forEach(year => {
+    const stat = document.getElementById(`stat${year}`);
+    const count = data[year].length;
+    const suffix = SHEETS[year].type === "محلية" ? "مرشح فائز" : "مرشح";
+    stat.textContent = `${SHEETS[year].label}: ${formatNumber(count)} ${suffix}`;
+  });
+
+  document.getElementById("statsBar").style.display = "flex";
   showWelcome();
 }
 
 function search(query) {
-  const q = norm(query).toLowerCase();
-  const parts = q.split(' ').filter(p => p.length > 0);
-  if (!parts.length) return { "2025": [], "2021": [] };
-  const out = { "2025": [], "2021": [] };
-  const years = activeYear === 'all' ? ['2025','2021'] : [activeYear];
-  for (const year of years) {
-    const nc = nameCol[year]; if (!nc) continue;
-    for (const row of data[year]) {
-      const name = norm(row[nc] || '').toLowerCase();
-      if (parts.every(p => name.includes(p))) out[year].push({...row, __year: year, __nc: nc});
-    }
-  }
-  return out;
+  const parts = normalizeText(query).split(" ").filter(Boolean);
+  if (!parts.length) return Object.fromEntries(YEAR_ORDER.map(year => [year, []]));
+
+  const results = Object.fromEntries(YEAR_ORDER.map(year => [year, []]));
+
+  availableYears().forEach(year => {
+    const config = SHEETS[year];
+    const nameColumn = config.nameColumn;
+
+    data[year].forEach(row => {
+      const candidateName = normalizeText(row[nameColumn]);
+      if (parts.every(part => candidateName.includes(part))) {
+        results[year].push({ ...row, __year: year });
+      }
+    });
+  });
+
+  return results;
 }
 
-function renderCard(row, idx) {
-  const year = row.__year; const nc = row.__nc; const name = row[nc] || '—';
-  const skip = new Set([nc, '__year', '__nc']);
-  const isHi = col => HIGHLIGHT_COLS.some(h => col.toLowerCase().includes(h.toLowerCase()));
-  const fieldsHtml = Object.entries(row)
-    .filter(([k]) => !skip.has(k))
-    .filter(([,v]) => v && v.trim() && v !== 'nan')
-    .map(([k,v]) => `
-      <div class="field-item">
-        <span class="field-label">${k}</span>
-        <span class="field-value ${isHi(k)?'hi':''}">${toEn(v)}</span>
-      </div>`).join('');
+function renderField(year, column, value) {
+  if (!value || String(value).trim() === "" || String(value).toLowerCase() === "nan") return "";
+
   return `
-    <div class="result-card c${year}" style="animation-delay:${idx*0.035}s">
+    <div class="field-item">
+      <span class="field-label">${escapeHTML(column)}</span>
+      <span class="field-value ${isHighlighted(year, column) ? "hi" : ""}">${escapeHTML(toEnglishDigits(value))}</span>
+    </div>
+  `;
+}
+
+function renderCard(row, index) {
+  const year = row.__year;
+  const config = SHEETS[year];
+  const name = row[config.nameColumn] || "—";
+  const fields = config.columns
+    .filter(column => column !== config.nameColumn)
+    .map(column => renderField(year, column, row[column]))
+    .join("");
+
+  return `
+    <article class="result-card c${year}" style="animation-delay:${index * 0.035}s">
       <div class="card-top">
-        <div class="candidate-name">${name}</div>
-        <span class="year-badge b${year}">🗳️ ${year}</span>
+        <h2 class="candidate-name">${escapeHTML(name)}</h2>
+        <div class="badges">
+          <span class="badge b${year}">${year}</span>
+          <span class="badge type">${config.type}</span>
+        </div>
       </div>
-      ${fieldsHtml ? `<div class="card-fields">${fieldsHtml}</div>` : ''}
-    </div>`;
+      ${fields ? `<div class="card-fields">${fields}</div>` : ""}
+    </article>
+  `;
 }
 
 function yearHeader(year, count) {
   return `
     <div class="year-section-header ys-${year}">
       <span class="ys-line"></span>
-      <span class="ys-label">انتخابات ${year} — ${count.toLocaleString('en-US')} نتيجة</span>
+      <span class="ys-label">${SHEETS[year].label} — ${formatNumber(count)} نتيجة</span>
       <span class="ys-line"></span>
-    </div>`;
+    </div>
+  `;
 }
 
 function showWelcome() {
-  document.getElementById('mainArea').innerHTML = `
+  const missing2023 = SHEETS["2023"].url ? "" : "<br>أضف رابط CSV الخاص بشيت 2023 داخل إعدادات SHEETS لتظهر نتائجه";
+
+  document.getElementById("mainArea").innerHTML = `
     <div class="state-box">
       <div class="s-icon">🗳️</div>
       <h3>ابدأ البحث عن المرشح</h3>
-      <p>اكتب اسم المرشح في حقل البحث أعلاه<br>يمكنك البحث بالاسم الثنائي أو الثلاثي أو اللقب أو اسم الجد</p>
-    </div>`;
+      <p>اكتب اسم المرشح في حقل البحث أعلاه<br>يمكنك البحث في انتخابات 2021 و2025 النيابية و2023 المحلية${missing2023}</p>
+    </div>
+  `;
 }
 
 function showResults(byYear, query) {
-  const area = document.getElementById('mainArea');
-  const total = (byYear['2025']?.length||0) + (byYear['2021']?.length||0);
+  const area = document.getElementById("mainArea");
+  const total = YEAR_ORDER.reduce((sum, year) => sum + byYear[year].length, 0);
+
   if (total === 0) {
     area.innerHTML = `
       <div class="state-box">
         <div class="s-icon">🔎</div>
-        <h3>لا توجد نتائج لـ "${query}"</h3>
+        <h3>لا توجد نتائج لـ "${escapeHTML(query)}"</h3>
         <p>تأكد من الكتابة الصحيحة · جرب جزءاً من الاسم<br>جرب اللقب وحده · أو اسم الأب منفرداً</p>
-      </div>`; return;
+      </div>
+    `;
+    return;
   }
+
   let html = `
     <div class="results-meta">
-      <div class="results-count">إجمالي النتائج: <strong>${total.toLocaleString('en-US')}</strong></div>
-      ${total > 50 ? `<span class="results-note">يُعرض أول 50 — دقّق البحث</span>` : ''}
-    </div>`;
-  for (const year of ['2025','2021']) {
-    const rows = byYear[year]||[]; if (!rows.length) continue;
-    const shown = rows.slice(0,25);
+      <div class="results-count">إجمالي النتائج: <strong>${formatNumber(total)}</strong></div>
+      ${total > 75 ? `<span class="results-note">يُعرض أول 25 من كل سنة — دقّق البحث</span>` : ""}
+    </div>
+  `;
+
+  YEAR_ORDER.forEach(year => {
+    const rows = byYear[year];
+    if (!rows.length) return;
+
     html += yearHeader(year, rows.length);
-    html += `<div class="results-grid">${shown.map((r,i)=>renderCard(r,i)).join('')}</div>`;
-  }
+    html += `<div class="results-grid">${rows.slice(0, 25).map(renderCard).join("")}</div>`;
+  });
+
   area.innerHTML = html;
 }
 
-document.getElementById('searchInput').addEventListener('input', e => {
+function runCurrentSearch() {
+  const query = document.getElementById("searchInput").value.trim();
+  if (query.length < 2) {
+    showWelcome();
+    return;
+  }
+
+  showResults(search(query), query);
+}
+
+document.getElementById("searchInput").addEventListener("input", event => {
   clearTimeout(searchTimeout);
-  const q = e.target.value.trim();
-  if (q.length < 2) { showWelcome(); return; }
-  searchTimeout = setTimeout(() => showResults(search(q), q), 280);
+
+  if (event.target.value.trim().length < 2) {
+    showWelcome();
+    return;
+  }
+
+  searchTimeout = setTimeout(runCurrentSearch, 280);
 });
 
-document.querySelectorAll('.year-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.year-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active'); activeYear = btn.dataset.year;
-    const q = document.getElementById('searchInput').value.trim();
-    if (q.length >= 2) showResults(search(q), q); else showWelcome();
+document.querySelectorAll(".year-tab").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".year-tab").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    activeYear = button.dataset.year;
+    runCurrentSearch();
   });
 });
 
 loadData().catch(() => {
-  document.getElementById('mainArea').innerHTML = `
+  document.getElementById("mainArea").innerHTML = `
     <div class="state-box">
       <div class="s-icon">⚠️</div>
       <h3>تعذّر تحميل البيانات</h3>
-      <p>تأكد من أن روابط Google Sheets مفتوحة للعموم<br>ثم أعد تحميل الصفحة</p>
-    </div>`;
+      <p>تأكد من أن روابط Google Sheets منشورة بصيغة CSV ومفتوحة للعموم<br>ثم أعد تحميل الصفحة</p>
+    </div>
+  `;
 });
 </script>
 </body>
